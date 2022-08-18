@@ -186,3 +186,61 @@ print("总体标准差为: %f" % arr_std_1)
 print("样本标准差为: %f" % arr_std_2)
 ```
 
+## 一维数组转成二维数组
+
+### 1. 低维数组等长循环
+
+在第一次为零的情况下，需要添加一个[]数组，原因是将它的基本框架搭建起来
+
+```python
+records = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+result = []
+for y in range(0, 4):
+    for x in range(0, 3):
+        if x == 0:
+            result.append([])
+        result[y].append(records[x + y * 3])
+print(result)
+```
+
+### 2. Numpy的函数调用
+
+#### 2.1 升维度
+
+使用函数`reshape`或者是`resize`
+
+使用`reshape`的时候原数组不会改变
+
+使用`resize`的时候会改变原数组
+
+```python
+import numpy as np
+
+x = np.arange(20)  # 生成数组
+print('old: ',x)
+result = x.reshape((4, 5))  # 将一维数组变成4行5列  原数组不会被修改或者覆盖
+print('reshape: ',x)
+x.resize((2, 10))  # 覆盖原来的数据将新的结果给原来的数组
+print('resize: ',x)
+# 输出
+#old:  [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19]
+#reshape:  [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19]
+#resize:  [[ 0  1  2  3  4  5  6  7  8  9]
+# [10 11 12 13 14 15 16 17 18 19]]
+```
+
+#### 2.2 降维度
+
+```python
+import numpy as np
+
+arr = np.arange(10)
+arr.resize((2, 5))
+print(arr)
+print(f"维度交换：\n{arr.swapaxes(1, 0)}")
+print(f"C{arr.flatten('C')}")  # 默认C  一行为主
+print(f"\nF:{arr.flatten('F')}")  # 以列为主
+print(f"\nA:{arr.flatten('A')}")  # 和行一样
+print(f"\nK:{arr.flatten('K')}")  # 和行一样
+```
+

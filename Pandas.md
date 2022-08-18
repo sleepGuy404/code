@@ -91,3 +91,8 @@ player_vals = ['A', 'B', 'C', 'D', 'E']
 df.insert(0, 'player', player_vals)
 ```
 
+## 获取行数和列数
+
+行数：`df.shape[0]`或者`len(df)`
+
+列数：`df.shape[1]`
