@@ -244,3 +244,12 @@ print(f"\nA:{arr.flatten('A')}")  # 和行一样
 print(f"\nK:{arr.flatten('K')}")  # 和行一样
 ```
 
+## 矩阵的逆
+
+```python
+import numpy as np 
+kernel = np.array([1, 1, 1, 2]).reshape((2, 2))
+print(kernel)
+print(np.linalg.inv(kernel))
+```
+
