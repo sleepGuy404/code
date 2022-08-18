@@ -1,14 +1,18 @@
-本文概述了 NumPy 中 ndarray 和 matrix 的使用差异和转换方法。示例代码假设已导入 `numpy`：
+# Numpy
+
+## matrix和ndarray的区别
+
+ NumPy 中 ndarray 和 matrix 的使用差异和转换方法。示例代码假设已导入 `numpy`：
 
 ```python
 import numpy as np
 ```
 
-# 1. 维数限制
+### 1. 维数限制
 
 matrix 和 ndarray 所能表示的数据维数不同，matrix 只能表示二维数据，而 ndarray 可以表示 N 维数据。
 
-## 1.1. matrix
+#### 1.1. matrix
 
 matrix 只能是**二维**，可以使用如下的方法生成两个 2 * 2 的 matrix：
 
@@ -28,7 +32,7 @@ c = np.mat([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
 # ValueError: matrix must be 2-dimensional
 ```
 
-## 1.2. ndarray
+#### 1.2. ndarray
 
 ndarray 可以是 **N 维**，如使用如下的方法生成两个 2 * 2 的 ndarray:
 
@@ -52,11 +56,11 @@ z = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
 #       [7 8]]]
 ```
 
-# 2. 矩阵乘法
+### 2. 矩阵乘法
 
 matrix 和 ndarray 在进行矩阵乘法时的操作不同。
 
-## 2.1. matrix
+#### 2.1. matrix
 
 对于 matrix，使用运算符 `*` 或 NumPy 的 [`dot()`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.dot.html) 方法计算矩阵乘法，使用NumPy 的 [`multiply()`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.multiply.html) 方法计算逐元素相乘例如对于上面定义的 matrix `a` 和 `b`，有：
 
@@ -72,7 +76,7 @@ np.multiply(a, b)
 #         [21, 32]])
 ```
 
-## 2.2. ndarray
+#### 2.2. ndarray
 
 对于 ndarray，使用 NumPy 或者 ndarray 的 [`dot()`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.dot.html) 方法计算矩阵乘法，使用 运算符 `*` 或 Numpy 的 `multiply()` 方法计算逐元素相乘。例如对于上面定义的 ndarray `x` 和 `y`，有：
 
@@ -96,9 +100,9 @@ x @ y
 #        [43, 50]])
 ```
 
-# 3. 转换
+### 3. 转换
 
-## 3.1. matrix 到 ndarray
+#### 3.1. matrix 到 ndarray
 
 可以使用 matrix 的 [`A`](https://docs.scipy.org/doc/numpy-dev/reference/generated/numpy.matrix.A.html) 属性或者 NumPy 的 [`asarray()`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.asarray.html) 方法，将 matrix 转换为 ndarray。如：
 
@@ -139,7 +143,7 @@ e =
   [ 3  4]]
 ```
 
-## 3.2. ndarray 到 matrix
+#### 3.2. ndarray 到 matrix
 
 可以使用 Numpy 的 [`asmatrix()`](https://docs.scipy.org/doc/numpy-1.10.4/reference/generated/numpy.asmatrix.html) 将 ndarray 转换为 matrix。如：
 
@@ -150,10 +154,35 @@ type(z) # numpy.matrixlib.defmatrix.matrix
 
 该转换也不会复制数据，如果修改了原始 ndarray（即 `x`），则该修改也会反映到转换后的 matrix（即 `z`）中。
 
-# 4. 如何选择 ndarray 和 matrix
+### 4. 如何选择 ndarray 和 matrix
 
 对于 ndarray 和 matrix 的选择，[scipy.org 给出的建议](https://docs.scipy.org/doc/numpy-dev/user/numpy-for-matlab-users.html#array-or-matrix-which-should-i-use)是使用 ndarray，因为：
 
 > - They are the standard vector/matrix/tensor type of numpy. Many numpy functions return arrays, not matrices.
 > - There is a clear distinction between element-wise operations and linear algebra operations.
 > - You can have standard vectors or row/column vectors if you like.
+
+# 均值，方差，标准差
+
+```python
+import numpy as np 
+arr = [1,2,3,4,5,6]
+ 
+# 求均值
+arr_mean = np.mean(arr)
+ 
+# 求方差
+arr_var = np.var(arr)
+ 
+# 求总体标准差
+arr_std_1 = np.std(arr)
+ 
+# 求样本标准差
+arr_std_2 = np.std(arr, ddof=1)
+ 
+print("平均值为：%f" % arr_mean)
+print("方差为：%f" % arr_var)
+print("总体标准差为: %f" % arr_std_1)
+print("样本标准差为: %f" % arr_std_2)
+```
+
