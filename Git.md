@@ -196,8 +196,6 @@ git init --bare <directory>
 
 `-—bare` 标记创建了一个没有工作目录的仓库，这样我们在仓库中更改文件并且提交了。中央仓库应该总是创建成裸仓库，因为向非裸仓库推送分支有可能会覆盖已有的代码变动。将`-—bare`看成是用来将仓库标记为储存设施，而不是一个开发环境。也就是说，对于所有的 Git 工作流，中央仓库是裸仓库，开发者的本地仓库是非裸仓库。
 
-![](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/01.svg)
-
 ### 例子
 
 因为 `git clone` 创建项目的本地拷贝更为方便，`git init` 最常见的使用情景就是用于创建中央仓库：
@@ -242,10 +240,6 @@ git clone <repo> <directory>
 
 这就使得 Git 的协作和 SVN 截然不同。SVN 依赖于中央仓库和工作副本之间的关系，而 Git 协作模型是基于仓库和仓库之间的交互的。相对于 SVN 的提交流程，你可以在 Git 仓库之间 `push` 或 `pull` 提交。
 
-![](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/01.svg)
-
-![](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/01.svg)
-
 当然，你也完全可以给予某个特定的仓库一些特殊的含义。比如，指定某个 Git 仓库为中央仓库，你就可以用 Git 进行中央化的工作流。重点是，这是通过约定实现的，而不是写死在版本控制系统本身。
 
 ### 例子
@@ -262,9 +256,7 @@ cd my-project
 
 第一行命令在本地机器的 `my-project` 目录下初始化了一个新的 Git 仓库，并且导入了中央仓库中的文件。接下来，你 `cd` 到项目目录，开始编辑文件、缓存提交、和其它仓库交互。同时注意 `.git` 拓展名克隆时会被去除。它表明了本地副本的非裸状态。
 
-``` shell
-git config
-```
+## git config
 
 `git config` 命令允许你在命令行中配置你的 Git 安装（或是一个独立仓库）。这个命令定义了所有配置，从用户信息到仓库行为等等。一些常见的配置命令如下所列。
 
@@ -378,10 +370,6 @@ git config --global alias.ci commit
 
 它会生成上一节中所说的 `~/.gitconfig` 文件。
 
-
-
-![Saving changes](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/02.svg)
-
 # 2.3-保存你的更改
 
 ![Saving changes](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/hero.svg)
@@ -429,8 +417,6 @@ git add -i
 `git add` 和 `git commit` 这两个命令组成了最基本的 Git 工作流。每一个 Git 用户都需要理解这两个命令，不管他们团队的协作模型是如何的。我有一千种方式可以将项目版本记录在仓库的历史中。
 
 在一个只有编辑、缓存、提交这样基本流程的项目上开发。首先，你要在工作目录中编辑你的文件。当你准备备份项目的当前状态时，你通过 `git add` 来缓存更改。当你对缓存的快照满意之后，你通过 `git commit` 将它提交到你的项目历史中去。
-
-![Git Tutorial: git add Snapshot](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/02.svg)
 
 `git add` 命令不能和 `svn add` 混在一起理解，后者将文件添加到仓库中。而 `git add` 发生于更抽象的 *更改* 层面。也就是说，`git add` 在每次你修改一个文件时都需要被调用，而 `svn add` 只需要每个文件调用一次。这听上去很多余，但这样的工作流使得一个项目更容易组织。
 
@@ -492,9 +478,7 @@ git commit -a
 
 #### 记录快照，而不是记录差异
 
-SVN 和 Git 除了使用上存在巨大差异，它们底层的实现同样遵循截然不同的设计哲学。SVN 追踪文件的 *变化* ，而 Git 的版本控制模型基于 *快照* 。比如说，一个 SVN 提交由仓库中原文件相比的差异（diff）组成。而 Git 在每次提交中记录文件的 *完整内容* 。
-
-![Git Tutorial: Snapshots, Not Differences](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/02.svg)
+SVN 和 Git 除了使用上存在巨大差异，它们底层的实现同样遵循截然不同的设计哲学。SVN 追踪文件的 *变化* ，而 Git 的版本控制模型基于*快照* 。比如说，一个 SVN 提交由仓库中原文件相比的差异（diff）组成。而 Git 在每次提交中记录文件的 *完整内容* 。
 
 这让很多 Git 操作比 SVN 来的快得多，因为文件的某个版本不需要通过版本间的差异组装得到——每个文件完整的修改能立刻从 Git 的内部数据库中得到。
 
@@ -732,13 +716,9 @@ git checkout <commit>
 
 版本控制系统背后的思想就是「安全」地储存项目的拷贝，这样你永远不用担心什么时候不可复原地破坏了你的代码库。当你建立了项目历史之后，`git checkout` 是一种便捷的方式，来将保存的快照「加载」到你的开发机器上去。
 
-检出之前的提交是一个只读操作。在查看旧版本的时候绝不会损坏你的仓库。你项目「当前」的状态在	`master` 上不会变化。在开发的正常阶段，`HEAD` 一般指向 master 或是其他的本地分支，但当你检出之前提交的时候，`HEAD` 就不再指向一个分支了——它直接指向一个提交。这被称为「分离 `HEAD`」状态 ，可以用下图可视化：
-
-![Git Tutorial: Checking out a previous commit](https://www.atlassian.com/git/images/tutorials/getting-started/viewing-old-commits/01.svg)
+检出之前的提交是一个只读操作。在查看旧版本的时候绝不会损坏你的仓库。你项目「当前」的状态在	`master` 上不会变化。在开发的正常阶段，`HEAD` 一般指向 master 或是其他的本地分支，但当你检出之前提交的时候，`HEAD` 就不再指向一个分支了——它直接指向一个提交。这被称为「分离 `HEAD`」状态。
 
 在另一方面，检出旧文件不影响你仓库的当前状态。你可以在新的快照中像其他文件一样重新提交旧版本。所以，在效果上，`git checkout` 的这个用法可以用来将单个文件回滚到旧版本 。
-
-![Git Training: Checking out a previous version of a file](https://www.atlassian.com/git/images/tutorials/getting-started/viewing-old-commits/02.svg)
 
 ### 例子
 
@@ -840,10 +820,6 @@ git commit -m "Make some changes that will be undone"
 git revert HEAD
 ```
 
-这个操作可以用下图可视化：
-
-![Git Tutorial: git revert Example](https://www.atlassian.com/git/images/tutorials/getting-started/undoing-changes/05.svg)
-
 注意第四个提交在撤销后依然在项目历史中。`git revert` 在后面增加了一个提交来撤销修改，而不是删除它。 因此，第三和第五个提交表示同样的代码，而第四个提交依然在历史中，以备以后我们想要回到这个提交。
 
 ## git reset
@@ -889,8 +865,6 @@ git reset --hard <commit>
 上面所有的调用都是用来移除仓库中的修改。没有 `--hard` 标记时 `git reset` 通过取消缓存或取消一系列的提交，然后重新构建提交来清理仓库。而加上 `--hard` 标记对于作了大死之后想要重头再来尤其方便。
 
 撤销(revert)被设计为撤销 *公开* 的提交的安全方式，`git reset`被设计为重设 *本地* 更改。因为两个命令的目的不同，它们的实现也不一样：重设完全地移除了一堆更改，而撤销保留了原来的更改，用一个新的提交来实现撤销。
-
-![Git Tutorial: Revert vs Reset](https://www.atlassian.com/git/images/tutorials/getting-started/undoing-changes/06.svg)
 
 #### 不要重设公共历史
 
@@ -1094,8 +1068,6 @@ rebase 的主要目的是为了保持一个线性的项目历史。比如说，�
 
 要将你的 feature 分支整合进 `master` 分支，你有两个选择：直接 merge，或者先 rebase 后 merge。前者会产生一个三路合并（3-way merge）和一个合并提交，而后者产生的是一个快速向前的合并以及完美的线性历史。下图展示了为什么 rebase 到 `master` 分支会促成一个快速向前的合并。
 
-![Git Tutorial: Fast-forward merge](https://www.atlassian.com/git/images/tutorials/getting-started/rewriting-history/04.svg)
-
 rebase 是将上游更改合并进本地仓库的通常方法。你每次想查看上游进展时，用 `git merge` 拉取上游更新会导致一个多余的合并提交。在另一方面，rebase 就好像是说「我想将我的更改建立在其他人的进展之上」。
 
 #### 不要 rebase 公共历史
@@ -1194,9 +1166,7 @@ pick 32618c4 Start developing a feature
 squash 62eed47 Fix something from the previous commit
 ```
 
-保存并关闭编辑器以开始 rebase。另一个编辑器会打开，询问你合并后的快照的提交信息。在定义了提交信息之后，rebase 就完成了，你可以在 `git log` 输出中看到那个提交。整个过程可以用下图可视化：
-
-![Git Tutorial: git rebase -i example](https://www.atlassian.com/git/images/tutorials/getting-started/rewriting-history/05.svg)
+保存并关闭编辑器以开始 rebase。另一个编辑器会打开，询问你合并后的快照的提交信息。在定义了提交信息之后，rebase 就完成了，你可以在 `git log` 输出中看到那个提交。
 
 注意缩并的提交和原来的两个提交的 ID 都不一样，告诉我们这确实是个新的提交。
 
@@ -1832,8 +1802,6 @@ git checkout -b <new-branch> <existing-branch>
 
 `git checkout` 和 `git branch` 是一对好基友。当你想要创建一个新功能时，你用 `git branch` 创建分支，然后用 `git checkout` 查看。你可以在一个仓库中用 `git checkout` 切换分支，同时开发几个功能。
 
-![Git Tutorial: Switch between multiple features in a single repo with git checkout.](https://www.atlassian.com/git/images/tutorials/collaborating/using-branches/04.svg)
-
 每个功能专门一个分支对于传统 SVN 工作流来说是一个巨大的转变。这使得尝试新的实验超乎想象的简单，不用担心毁坏已有的功能，并且可以同时开发几个不相关的功能。另外，分支可以促进了不同的协作工作流。
 
 #### 分离的 `HEAD`
@@ -1841,8 +1809,6 @@ git checkout -b <new-branch> <existing-branch>
 现在我们已经看到了 `git checkout` 最主要的三种用法，我们可以讨论上一篇中提到的「分离 `HEAD`」状态了。
 
 记住，`HEAD` 是 Git 指向当前快照的引用。`git checkout` 命令内部只是更新 `HEAD`，指向特定分支或提交。当它指向分支时，Git 不会报错，但当你 check out 提交时，它会进入「分离 `HEAD`」状态。
-
-![Git Tutorial: Attached vs Detached Head](https://www.atlassian.com/git/images/tutorials/collaborating/using-branches/05.svg)
 
 有个警告会告诉你所做的更改和项目的其余历史处于「分离」的状态。如果你在分离 `HEAD` 状态开始开发新功能，没有分支可以让你回到之前的状态。当你不可避免地 checkout 到了另一个分支（比如你的更改并入了这个分支），你将不再能够引用你的 feature 分支：
 
@@ -2038,8 +2004,6 @@ git branch -d new-feature
 
 ### 一人初始化了中央仓库
 
-![Git Workflows: Initialize Central Bare Repository](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/centralized-workflow/04.svg)
-
 首先，需要有人在服务器上创建中央仓库。如果这是一个新项目，你可以初始化一个空的仓库。不然，你需要导入一个已经存在的 Git 或 SVN 项目。
 
 中央仓库应该永远是裸仓库（没有工作目录），可以这样创建：
@@ -2051,8 +2015,6 @@ ssh user@host git init --bare /path/to/repo.git
 但确保你使用的 SSH 用户名 `user`、服务器 `host` 的域名或 IP 地址、储存仓库的地址 `/path/to/repo.git` 是有效的。注意 `.git` 约定俗成地出现在仓库名的后面，表明这是一个裸仓库。
 
 ### 所有人将仓库克隆到本地
-
-![Git Workflows: Clone Central Repo](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/centralized-workflow/05.svg)
 
 接下来，每个开发者在本地创建一份完整项目的副本。使用 [`git clone`](https://github.com/geeeeeeeeek/git-recipes/wiki/2.2-%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93#git-clone) 命令：
 
@@ -2191,8 +2153,6 @@ git push origin master
 
 ## Feature 分支的工作流
 
-![Feature Branch Workflow](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/feature-branch-workflow/01.svg)
-
 一旦你掌握了 [中心化工作流](https://github.com/geeeeeeeeek/git-recipes/wiki/3.5-%E5%B8%B8%E8%A7%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%AF%94%E8%BE%83#%E4%B8%AD%E5%BF%83%E5%8C%96%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81) 的使用方法，在你的开发流程中添加功能分支是一个简单的方式，来促进协作和开发者之间的交流。这种封装使得多个开发者专注自己的功能而不会打扰主代码库。它还保证 `master` 分支永远不会包含损坏的代码，给持续集成环境带来了是很大的好处。
 
 封装功能的开发使得 [Pull Request](https://github.com/geeeeeeeeek/git-recipes/wiki/3.3-%E5%88%9B%E5%BB%BA-Pull-Request) 的使用成为可能，用来启动围绕一个分支的讨论。它给了其他开发者在功能并入主项目之前参与决策的机会。或者，如果你开发功能时卡在一半，你可以发起一个 Pull Request，向同事寻求建议。重点是，Pull Request 使得你的团队在评论其他人的工作时变得非常简单。
@@ -2302,8 +2262,6 @@ Mary 和 Bill 一起开发 `marys-feature`，在 Pull Request 上讨论的同时
 
 ## GitFlow 工作流
 
-![Gitflow Workflow](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/gitflow-workflow/01.svg)
-
 下面的 [GitFlow 工作流](http://nvie.com/posts/a-successful-git-branching-model/)一节源于 [nvie](http://nvie.com/) 网站上的作者 Vincent Driessen。
 
 GitFlow 工作流围绕项目发布定义了一个严格的分支模型。有些地方比[功能分支工作流](https://github.com/geeeeeeeeek/git-recipes/wiki/3.5-%E5%B8%B8%E8%A7%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%AF%94%E8%BE%83#feature%E5%88%86%E6%94%AF%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81)更复杂，为管理大型项目提供了鲁棒的框架。
@@ -2358,8 +2316,6 @@ GitFlow 工作流仍然使用中央仓库作为开发者沟通的中心。和[�
 
 ### 创建一个开发分支
 
-![Create a Develop Branch](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/gitflow-workflow/06.svg)
-
 你要做的第一步是为默认的 `master` 分支创建一个互补的 `develop` 分支。最简单的办法是[在本地创建一个空的 develop 分支](https://github.com/geeeeeeeeek/git-recipes/wiki/3.4-%E4%BD%BF%E7%94%A8%E5%88%86%E6%94%AF#git-branch)，将它推送到服务器上：
 
 ```
@@ -2378,8 +2334,6 @@ git checkout -b develop origin/develop
 
 ### Mary 和 John 开始了新功能
 
-![New Feature Branches](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/gitflow-workflow/07.svg)
-
 我们的例子从 John 和 Mary 在不同分支上工作开始。他们都要为自己的功能创建单独的分支。[他们的功能分支都应该基于`develop`](https://github.com/geeeeeeeeek/git-recipes/wiki/3.4-%E4%BD%BF%E7%94%A8%E5%88%86%E6%94%AF#git-checkout)，而不是 `master`：
 
 ```
@@ -2396,8 +2350,6 @@ git commit
 
 ### Mary 完成了她的功能
 
-![Merging a Feature Branch](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/gitflow-workflow/08.svg)
-
 在添加了一些提交之后，Mary 确信她的功能以及准备好了。如果她的团队使用 Pull Request，现在正是发起 Pull Request 的好时候，请求将她的功能并入 `develop` 分支。否则，她可以向下面一样，将它并入本地的 `develop` 分支，推送到中央仓库：
 
 ```
@@ -2412,8 +2364,6 @@ git branch -d some-feature
 
 ### Mary 开始准备发布
 
-![Preparing a Release](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/gitflow-workflow/09.svg)
-
 当 John 仍然在他的功能分支上工作时，Mary s开始准备项目的第一个官方发布。和开发功能一样，她新建了一个分支来封装发布的准备工作。这也正是发布的版本号创建的一步：
 
 ```
@@ -2425,8 +2375,6 @@ git checkout -b release-0.1 develop
 一旦 Mary 创建了这个分支，推送到中央仓库，这次发布的功能便被锁定了。不在 `develop` 分支中的功能将被推迟到下个发布周期。
 
 ### Mary完成了她的发布
-
-![Merging Release into Master](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/gitflow-workflow/10.svg)
 
 一旦发布准备稳妥，Mary 将它并入 `master` 和 `develop`，然后删除发布分支。合并回 `develop` 很重要，因为可能已经有关键的更新添加到了发布分支上，而开发新功能需要用到它们。同样的，如果 Mary 的团队重视代码审查，现在将是发起 Pull Request 的完美时机。
 
@@ -2450,8 +2398,6 @@ git push --tags
 Git 提供了许多钩子，即仓库中特定事件发生时被执行的脚本。当你向中央仓库推送 `master` 分支或者标签时，你可以配置一个钩子来自动化构建公开发布。
 
 ### 终端用户发现了一个 bug
-
-![Maintenance Branch](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/gitflow-workflow/11.svg)
 
 正式发布之后，Mary 回过头来和 John 一起为下一个发布开发功能。这时，一个终端用户开了一个 issue 抱怨说当前发布中存在一个 bug。为了解决这个 bug，Mary（或 John）从 `master` 创建了一个维护分支，用几个提交修复这个 issue，然后直接合并回 `master`。
 
@@ -2482,8 +2428,6 @@ git branch -d issue-#001
 
 Fork 工作流和教程中讨论的其它工作流截然不同。与其使用唯一的服务端仓库作为「中央」代码库，它给予 *每个* 开发者一个服务端仓库。也就是说每个贡献者都有两个 Git 仓库，而不是一个：一个私有的本地仓库和一个公开的服务端仓库。
 
-![Git Workflows: Forking](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/forking-workflow/01.svg)
-
 Fork 工作流的主要优点在于贡献可以轻易地整合进项目，而不需要每个人都推送到单一的中央仓库。开发者推送到他们 *自己的* 服务端仓库，只有项目管理者可以推送到官方仓库。这使得管理者可以接受任何开发者的提交，却不需要给他们中央仓库的权限。
 
 结论是，这种分布式的工作流为大型、组织性强的团队（包括不可信的第三方）提供了安全的协作方式。它同时也是开源项目理想的工作流。
@@ -2510,8 +2454,6 @@ Fork 工作流的主要优点在于贡献可以轻易地整合进项目，而不
 
 ### 项目维护者初始化了中央仓库
 
-![Forking Workflow: Shared Repository](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/forking-workflow/02.svg)
-
 和任何基于 Git 的项目一样，第一步是在服务端创建一个可以被所有项目成员访问到的官方仓库。一般来说，这个仓库同时还是项目维护者的公开仓库。
 
 [公开的仓库应该永远是裸的](https://github.com/geeeeeeeeek/git-recipes/wiki/2.2-%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93#git-init)，不管它们是否代表官方代码库。所以项目维护者应该运行下面这样的命令来设置官方仓库：
@@ -2532,8 +2474,6 @@ GitHub 同时提供了一个图形化界面来替代上面的操作。这和教�
 在这步之后，每个开发者应该都有了自己的服务端仓库。像官方仓库一样，所有这些仓库都应该是裸仓库。
 
 ### 开发者将 fork 的仓库克隆到本地
-
-![Forking Workflow: Cloning the forked repositories](https://www.atlassian.com/git/images/tutorials/collaborating/comparing-workflows/forking-workflow/04.svg)
 
 接下来开发者需要克隆他们自己的公开仓库。他们可以用熟悉的 `git clone` 命令来完成这一步。
 
@@ -2559,8 +2499,6 @@ git remote add upstream https://user@bitbucket.org/maintainer/repo.git
 
 ### 开发者进行自己的开发
 
-![Forking Workflow: Developers work on features](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/02%20(3).svg)
-
 在他们刚克隆的本地仓库中，开发者可以编辑代码、[提交更改](https://github.com/geeeeeeeeek/git-recipes/wiki/2.3-%E4%BF%9D%E5%AD%98%E4%BD%A0%E7%9A%84%E6%9B%B4%E6%94%B9#git-commit)，和其它分支中一样[创建分支](https://github.com/geeeeeeeeek/git-recipes/wiki/3.4-%E4%BD%BF%E7%94%A8%E5%88%86%E6%94%AF#git-branch)：
 
 ```
@@ -2579,8 +2517,6 @@ git pull upstream master
 
 ### 开发者发布他们的功能
 
-![Forking Workflow: Developers publish features](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/02%20(3).svg)
-
 一旦开发者准备好共享他们的新功能，他们需要做两件事情。第一，他们必须将贡献的代码推送到自己的公开仓库，让其他开发者能够访问到。他们的 `origin` 远端应该已经设置好了，所以他们只需要：
 
 ```
@@ -2592,8 +2528,6 @@ git push origin feature-branch
 第二，他们需要通知项目维护者，他们想要将功能并入官方代码库。GitHub 提供了一个「New Pull Request」按钮，跳转到一个网页，让你指明想要并入主仓库的分支。一般来说，你希望将功能分支并入上游远端的 `master` 分支。
 
 ### 项目维护者整合他们的功能
-
-![Forking Workflow: Integrate Features](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/02%20(3).svg)
 
 当项目维护者收到 Pull Request 时，他们的工作是决定是否将它并入官方的代码库。他们可以使用下面两种方式之一：
 
@@ -2618,8 +2552,6 @@ git push origin master
 记住，维护者的 `origin` 指向他们的公开仓库，也就是项目的官方代码库。开发者的贡献现在完全并入了项目。
 
 ### 开发者和中央仓库保持同步
-
-![Forking Workflow: Synchronize with the official repository](https://cyan-1305222096.cos.ap-nanjing.myqcloud.com/02%20(3).svg)
 
 因为主代码库已经取得了新的进展，其他开发者应该和官方仓库同步：
 
@@ -3026,8 +2958,6 @@ hotfix 分支末端的两个提交现在变成了悬挂提交。也就是说，�
 - --hard – 缓存区和工作目录都同步到你指定的提交
 
 把这些标记想成定义 `git reset` 操作的作用域就容易理解多了。
-
-![git rese的定义域](https://www.atlassian.com/git/images/tutorials/advanced/resetting-checking-out-and-reverting/03.svg)
 
 这些标记往往和 HEAD 作为参数一起使用。比如，`git reset --mixed HEAD` 将你当前的改动从缓存区中移除，但是这些改动还留在工作目录中。另一方面，如果你想完全舍弃你没有提交的改动，你可以使用 `git reset --hard HEAD`。这是 `git reset` 最常用的两种用法。
 
